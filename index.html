@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" id="htmlRoot">
 <head>
 <meta charset="UTF-8">
 <title>Habit Pro</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -18,47 +18,56 @@
   <div class="ob-blob ob-blob2"></div>
   <div class="ob-steps">
 
-    <!-- Step 1: Nombre -->
+    <!-- Step 1: Idioma -->
     <div class="ob-step active" id="ob1">
-      <div class="ob-emoji">🌱</div>
-      <h2 class="ob-title">Bienvenido a<br>Habit Pro</h2>
-      <p class="ob-sub">Construye hábitos poderosos, un día a la vez. Primero, ¿cómo te llamas?</p>
-      <input class="ob-input" id="ob_name" placeholder="Tu nombre..." maxlength="24">
-      <button class="ob-next-btn" onclick="obNext(2)">Continuar →</button>
-    </div>
-
-    <!-- Step 2: Meta -->
-    <div class="ob-step" id="ob2">
-      <div class="ob-emoji">🎯</div>
-      <h2 class="ob-title">¿Por qué quieres<br>empezar?</h2>
-      <p class="ob-sub">Elige tu meta principal. Esto personalizará tu experiencia.</p>
+      <div class="ob-emoji">🌍</div>
+      <h2 class="ob-title" data-i18n="ob_lang_title">Choose your language</h2>
+      <p class="ob-sub" data-i18n="ob_lang_sub">Select the language for your experience</p>
       <div class="ob-goal-grid">
-        <button class="ob-goal-btn" onclick="selectGoal(this,'salud')"><span>💪</span>Salud y fitness</button>
-        <button class="ob-goal-btn" onclick="selectGoal(this,'mente')"><span>🧘</span>Bienestar mental</button>
-        <button class="ob-goal-btn" onclick="selectGoal(this,'estudio')"><span>📚</span>Estudio</button>
-        <button class="ob-goal-btn" onclick="selectGoal(this,'productividad')"><span>⚡</span>Productividad</button>
+        <button class="ob-goal-btn" onclick="selectLang(this,'es')"><span>🇪🇸</span>Español</button>
+        <button class="ob-goal-btn" onclick="selectLang(this,'en')"><span>🇺🇸</span>English</button>
       </div>
-      <button class="ob-next-btn" onclick="obNext(3)">Continuar →</button>
+      <button class="ob-next-btn" onclick="obNext(2)" data-i18n="btn_continue">Continuar →</button>
     </div>
 
-    <!-- Step 3: Hábitos -->
+    <!-- Step 2: Nombre -->
+    <div class="ob-step" id="ob2">
+      <div class="ob-emoji">🌱</div>
+      <h2 class="ob-title" data-i18n="ob_name_title">Bienvenido a Habit Pro</h2>
+      <p class="ob-sub" data-i18n="ob_name_sub">Construye hábitos poderosos. ¿Cómo te llamas?</p>
+      <input class="ob-input" id="ob_name" data-i18n-placeholder="placeholder_name" placeholder="Tu nombre..." maxlength="24">
+      <button class="ob-next-btn" onclick="obNext(3)" data-i18n="btn_continue">Continuar →</button>
+    </div>
+
+    <!-- Step 3: Meta -->
     <div class="ob-step" id="ob3">
-      <div class="ob-emoji">✨</div>
-      <h2 class="ob-title">Agrega tus<br>primeros hábitos</h2>
-      <p class="ob-sub">¿Qué quieres lograr esta semana? Puedes editarlos después.</p>
-      <div class="ob-habit-list" id="obHabitList"></div>
-      <div class="ob-add-row">
-        <input id="obHabitInput" placeholder="Ej: Tomar agua, meditar...">
-        <button onclick="obAddHabit()">+</button>
+      <div class="ob-emoji">🎯</div>
+      <h2 class="ob-title" data-i18n="ob_goal_title">¿Por qué quieres empezar?</h2>
+      <p class="ob-sub" data-i18n="ob_goal_sub">Elige tu meta principal</p>
+      <div class="ob-goal-grid">
+        <button class="ob-goal-btn" onclick="selectGoal(this,'salud')"><span>💪</span><span data-i18n="goal_health">Salud</span></button>
+        <button class="ob-goal-btn" onclick="selectGoal(this,'mente')"><span>🧘</span><span data-i18n="goal_mind">Bienestar</span></button>
+        <button class="ob-goal-btn" onclick="selectGoal(this,'estudio')"><span>📚</span><span data-i18n="goal_study">Estudio</span></button>
+        <button class="ob-goal-btn" onclick="selectGoal(this,'productividad')"><span>⚡</span><span data-i18n="goal_prod">Productividad</span></button>
       </div>
-      <button class="ob-next-btn" onclick="finishOnboarding()">¡Empezar! 🚀</button>
+      <button class="ob-next-btn" onclick="obNext(4)" data-i18n="btn_continue">Continuar →</button>
+    </div>
+
+    <!-- Step 4: Hábitos predeterminados -->
+    <div class="ob-step" id="ob4">
+      <div class="ob-emoji">✨</div>
+      <h2 class="ob-title" data-i18n="ob_habits_title">Elige tus hábitos</h2>
+      <p class="ob-sub" data-i18n="ob_habits_sub">Selecciona los hábitos que quieres trabajar. Puedes cambiarlos en tu perfil.</p>
+      <div class="ob-preset-grid" id="obPresetGrid"></div>
+      <button class="ob-next-btn" onclick="finishOnboarding()" data-i18n="btn_start">¡Empezar! 🚀</button>
     </div>
 
   </div>
   <div class="ob-dots">
-    <div class="ob-dot active" id="dot1"></div>
-    <div class="ob-dot" id="dot2"></div>
-    <div class="ob-dot" id="dot3"></div>
+    <div class="ob-dot active"></div>
+    <div class="ob-dot"></div>
+    <div class="ob-dot"></div>
+    <div class="ob-dot"></div>
   </div>
 </div>
 
@@ -70,29 +79,43 @@
   <!-- HEADER -->
   <div class="header">
     <div class="header-left">
-      <span class="header-greeting" id="greetingText">Buenos días</span>
-      <span class="header-name" id="headerName">Usuario</span>
+      <span class="header-greeting" id="greetingText"></span>
+      <div class="header-name-row">
+        <span class="header-name" id="headerName">Usuario</span>
+        <span class="user-level-badge" id="headerLevel">⭐ Novato</span>
+      </div>
     </div>
     <div class="header-right">
-      <button class="theme-btn" id="toggleTheme">🌙</button>
+      <button class="theme-btn" id="toggleTheme">☀️</button>
       <button class="avatar-btn" onclick="showScreen('profile', document.querySelector('[data-sc=profile]'))" id="headerAvatar">👤</button>
     </div>
   </div>
 
   <!-- ── HOME ── -->
   <div id="home" class="screen active">
-    <div class="streak-card">
-      <div class="streak-fire">🔥</div>
-      <div class="streak-info">
-        <small>RACHA ACTUAL</small>
-        <strong id="streakNum">0</strong>
-        <span id="streakLabel">días seguidos</span>
+
+    <div class="streak-row">
+      <div class="streak-card">
+        <div class="streak-fire">🔥</div>
+        <div class="streak-info">
+          <small data-i18n="streak_label">RACHA ACTUAL</small>
+          <strong id="streakNum">0</strong>
+          <span id="streakDays" data-i18n="days_row">días seguidos</span>
+        </div>
+      </div>
+      <div class="record-card">
+        <div class="streak-fire">🏆</div>
+        <div class="streak-info">
+          <small data-i18n="record_label">RÉCORD</small>
+          <strong id="recordNum">0</strong>
+          <span data-i18n="days_row">días</span>
+        </div>
       </div>
     </div>
 
-    <div class="prog-card">
+    <div class="prog-card" id="progCard">
       <div class="prog-top">
-        <span>Progreso de hoy</span>
+        <span data-i18n="progress_today">Progreso de hoy</span>
         <span class="prog-pct" id="progPct">0%</span>
       </div>
       <div class="prog-bar">
@@ -100,68 +123,68 @@
       </div>
     </div>
 
-    <div class="sec-label">Mis hábitos</div>
+    <div class="sec-label" data-i18n="my_habits">MIS HÁBITOS</div>
     <div id="habitList"></div>
 
     <div class="add-box">
-      <input id="habitInput" placeholder="Nuevo hábito..." maxlength="40">
+      <input id="habitInput" data-i18n-placeholder="placeholder_habit" placeholder="Nuevo hábito..." maxlength="40">
       <button onclick="addHabit()">+</button>
     </div>
   </div>
 
   <!-- ── STATS ── -->
   <div id="stats" class="screen">
-    <div class="sec-label" style="margin-top:4px">Resumen</div>
+    <div class="sec-label" style="margin-top:4px" data-i18n="summary">RESUMEN</div>
     <div class="stats-grid">
-      <div class="stat-card c1"><small>🔥 RACHA</small><strong id="s_streak">0</strong></div>
-      <div class="stat-card c2"><small>✅ DÍAS GANADOS</small><strong id="s_total">0</strong></div>
-      <div class="stat-card"><small>📅 DÍAS ACTIVOS</small><strong id="s_days">0</strong></div>
-      <div class="stat-card"><small>🏅 LOGROS</small><strong id="s_rewards">0</strong></div>
+      <div class="stat-card c1"><small data-i18n="streak_label">🔥 RACHA</small><strong id="s_streak">0</strong></div>
+      <div class="stat-card c2"><small data-i18n="days_won">✅ DÍAS GANADOS</small><strong id="s_total">0</strong></div>
+      <div class="stat-card c3"><small data-i18n="record_label">🏆 RÉCORD</small><strong id="s_record">0</strong></div>
+      <div class="stat-card c4"><small data-i18n="level_label">⭐ NIVEL</small><strong id="s_level">1</strong></div>
     </div>
 
     <div class="chart-card">
-      <div class="chart-title">Hoy — Completados vs Pendientes</div>
+      <div class="chart-title" data-i18n="chart_today">Hoy — Completados vs Pendientes</div>
       <canvas id="doughnutChart"></canvas>
     </div>
 
     <div class="chart-card">
-      <div class="chart-title">Últimos 7 días</div>
+      <div class="chart-title" data-i18n="chart_week">Últimos 7 días</div>
       <canvas id="barChart"></canvas>
     </div>
 
     <div class="cal-wrap" style="margin-top:12px">
-      <div class="cal-title">Historial 30 días</div>
+      <div class="cal-title" data-i18n="history_30">Historial 30 días</div>
       <div id="calendar"></div>
     </div>
   </div>
 
   <!-- ── MOTIVACIÓN ── -->
   <div id="motivation" class="screen">
-    <div class="sec-label" style="margin-top:4px">Frase del día</div>
+    <div class="sec-label" style="margin-top:4px" data-i18n="phrase_day">FRASE DEL DÍA</div>
     <div class="quote-wrap">
-      <div class="quote-tag">💡 Motivación</div>
-      <div class="quote-text" id="quoteText">Cargando...</div>
+      <div class="quote-tag">💡 <span data-i18n="motivation_tag">Motivación</span></div>
+      <div class="quote-text" id="quoteText"></div>
       <div class="quote-deco"></div>
       <div class="quote-author">— Habit Pro</div>
     </div>
-    <button class="refresh-btn" onclick="newQuote()">🔄 &nbsp;Nueva frase</button>
+    <button class="refresh-btn" onclick="newQuote()">🔄 &nbsp;<span data-i18n="new_phrase">Nueva frase</span></button>
   </div>
 
   <!-- ── RANKING ── -->
   <div id="leaderboard" class="screen lb-screen">
     <div class="lb-hero">
-      <div class="lb-hero-tag">✦ En vivo</div>
-      <h1 class="lb-hero-title">🏆 Ranking de<br><span>Rachas</span></h1>
-      <p class="lb-hero-sub">Los usuarios con las rachas más largas.<br>¿Estás en el top?</p>
+      <div class="lb-hero-tag">✦ <span data-i18n="live">En vivo</span></div>
+      <h1 class="lb-hero-title">🏆 <span data-i18n="ranking_title">Ranking de</span><br><span class="gold" data-i18n="ranking_sub">Rachas</span></h1>
+      <p class="lb-hero-sub" data-i18n="ranking_desc">Los usuarios con las rachas más largas. ¿Estás en el top?</p>
     </div>
 
     <div class="lb-tabs">
-      <button class="lb-tab active" onclick="filterLb(this,'all')">Todos</button>
-      <button class="lb-tab" onclick="filterLb(this,'correr')">🏃 Correr</button>
-      <button class="lb-tab" onclick="filterLb(this,'leer')">📖 Leer</button>
-      <button class="lb-tab" onclick="filterLb(this,'gym')">💪 Gimnasio</button>
-      <button class="lb-tab" onclick="filterLb(this,'comida')">🥗 Comer sano</button>
-      <button class="lb-tab" onclick="filterLb(this,'custom')">⭐ Personal</button>
+      <button class="lb-tab active" onclick="filterLb(this,'all')" data-i18n="all">Todos</button>
+      <button class="lb-tab" onclick="filterLb(this,'correr')">🏃 <span data-i18n="run">Correr</span></button>
+      <button class="lb-tab" onclick="filterLb(this,'leer')">📖 <span data-i18n="read">Leer</span></button>
+      <button class="lb-tab" onclick="filterLb(this,'gym')">💪 <span data-i18n="gym">Gym</span></button>
+      <button class="lb-tab" onclick="filterLb(this,'comida')">🥗 <span data-i18n="eat">Comer sano</span></button>
+      <button class="lb-tab" onclick="filterLb(this,'custom')">⭐ <span data-i18n="custom">Personal</span></button>
     </div>
 
     <!-- Tabla 1 -->
@@ -169,39 +192,23 @@
       <div class="lb-card-head">
         <div class="lb-card-icon icon-run">🏃</div>
         <div class="lb-card-info">
-          <div class="lb-card-title">Correr 3 km diarios</div>
-          <div class="lb-card-sub">Usuarios cumpliendo esta meta cada día</div>
+          <div class="lb-card-title" data-i18n="lb_run_title">Correr 3 km diarios</div>
+          <div class="lb-card-sub" data-i18n="lb_run_sub">Usuarios cumpliendo esta meta cada día</div>
         </div>
-        <div class="lb-count-badge" id="badge-correr">3 activos</div>
+        <div class="lb-count-badge" id="badge-correr">3</div>
       </div>
       <div class="lb-col-header">
-        <span class="col-rank">#</span>
-        <span class="col-avatar"></span>
-        <span class="col-name">Nombre</span>
-        <span class="col-streak">Racha</span>
+        <span class="col-rank">#</span><span class="col-avatar"></span>
+        <span class="col-name" data-i18n="col_name">Nombre</span>
+        <span class="col-streak" data-i18n="col_streak">Racha</span>
       </div>
       <div class="lb-rows" id="rows-correr">
-        <div class="lb-row rank-1">
-          <div class="lb-rank"><div class="rank-num">1</div></div>
-          <div class="lb-avatar-placeholder">😎</div>
-          <span class="lb-name">Carlos M.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 47</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-1"><div class="lb-rank"><div class="rank-num">1</div></div><div class="lb-avatar-placeholder">😎</div><span class="lb-name">Carlos M.</span><div class="lb-streak"><div class="streak-pill">🔥 47</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-2">
-          <div class="lb-rank"><div class="rank-num">2</div></div>
-          <div class="lb-avatar-placeholder">🙋</div>
-          <span class="lb-name">Sofía R.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 32</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-2"><div class="lb-rank"><div class="rank-num">2</div></div><div class="lb-avatar-placeholder">🙋</div><span class="lb-name">Sofía R.</span><div class="lb-streak"><div class="streak-pill">🔥 32</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-3">
-          <div class="lb-rank"><div class="rank-num">3</div></div>
-          <div class="lb-avatar-placeholder">🧑</div>
-          <span class="lb-name">Miguel A.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 19</div><span class="streak-label">días</span></div>
-        </div>
-        <div class="lb-empty-hint">· · · más usuarios aparecerán aquí · · ·</div>
+        <div class="lb-row rank-3"><div class="lb-rank"><div class="rank-num">3</div></div><div class="lb-avatar-placeholder">🧑</div><span class="lb-name">Miguel A.</span><div class="lb-streak"><div class="streak-pill">🔥 19</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
+        <div class="lb-empty-hint" data-i18n="more_users">· · · más usuarios aparecerán aquí · · ·</div>
       </div>
     </div>
 
@@ -210,39 +217,19 @@
       <div class="lb-card-head">
         <div class="lb-card-icon icon-read">📖</div>
         <div class="lb-card-info">
-          <div class="lb-card-title">Leer 20 páginas diarias</div>
-          <div class="lb-card-sub">Lectores constantes esta semana</div>
+          <div class="lb-card-title" data-i18n="lb_read_title">Leer 20 páginas diarias</div>
+          <div class="lb-card-sub" data-i18n="lb_read_sub">Lectores constantes esta semana</div>
         </div>
-        <div class="lb-count-badge" id="badge-leer">3 activos</div>
+        <div class="lb-count-badge" id="badge-leer">3</div>
       </div>
-      <div class="lb-col-header">
-        <span class="col-rank">#</span>
-        <span class="col-avatar"></span>
-        <span class="col-name">Nombre</span>
-        <span class="col-streak">Racha</span>
-      </div>
+      <div class="lb-col-header"><span class="col-rank">#</span><span class="col-avatar"></span><span class="col-name" data-i18n="col_name">Nombre</span><span class="col-streak" data-i18n="col_streak">Racha</span></div>
       <div class="lb-rows" id="rows-leer">
-        <div class="lb-row rank-1">
-          <div class="lb-rank"><div class="rank-num">1</div></div>
-          <div class="lb-avatar-placeholder">📚</div>
-          <span class="lb-name">Valentina G.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 61</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-1"><div class="lb-rank"><div class="rank-num">1</div></div><div class="lb-avatar-placeholder">📚</div><span class="lb-name">Valentina G.</span><div class="lb-streak"><div class="streak-pill">🔥 61</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-2">
-          <div class="lb-rank"><div class="rank-num">2</div></div>
-          <div class="lb-avatar-placeholder">🧠</div>
-          <span class="lb-name">Diego P.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 28</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-2"><div class="lb-rank"><div class="rank-num">2</div></div><div class="lb-avatar-placeholder">🧠</div><span class="lb-name">Diego P.</span><div class="lb-streak"><div class="streak-pill">🔥 28</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-3">
-          <div class="lb-rank"><div class="rank-num">3</div></div>
-          <div class="lb-avatar-placeholder">👩</div>
-          <span class="lb-name">Lucía T.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 14</div><span class="streak-label">días</span></div>
-        </div>
-        <div class="lb-empty-hint">· · · más usuarios aparecerán aquí · · ·</div>
+        <div class="lb-row rank-3"><div class="lb-rank"><div class="rank-num">3</div></div><div class="lb-avatar-placeholder">👩</div><span class="lb-name">Lucía T.</span><div class="lb-streak"><div class="streak-pill">🔥 14</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
+        <div class="lb-empty-hint" data-i18n="more_users">· · · más usuarios aparecerán aquí · · ·</div>
       </div>
     </div>
 
@@ -251,39 +238,19 @@
       <div class="lb-card-head">
         <div class="lb-card-icon icon-gym">💪</div>
         <div class="lb-card-info">
-          <div class="lb-card-title">Ir al gimnasio</div>
-          <div class="lb-card-sub">Atletas que no fallan ningún día</div>
+          <div class="lb-card-title" data-i18n="lb_gym_title">Ir al gimnasio</div>
+          <div class="lb-card-sub" data-i18n="lb_gym_sub">Atletas que no fallan ningún día</div>
         </div>
-        <div class="lb-count-badge" id="badge-gym">3 activos</div>
+        <div class="lb-count-badge" id="badge-gym">3</div>
       </div>
-      <div class="lb-col-header">
-        <span class="col-rank">#</span>
-        <span class="col-avatar"></span>
-        <span class="col-name">Nombre</span>
-        <span class="col-streak">Racha</span>
-      </div>
+      <div class="lb-col-header"><span class="col-rank">#</span><span class="col-avatar"></span><span class="col-name" data-i18n="col_name">Nombre</span><span class="col-streak" data-i18n="col_streak">Racha</span></div>
       <div class="lb-rows" id="rows-gym">
-        <div class="lb-row rank-1">
-          <div class="lb-rank"><div class="rank-num">1</div></div>
-          <div class="lb-avatar-placeholder">🏋️</div>
-          <span class="lb-name">Andrés K.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 38</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-1"><div class="lb-rank"><div class="rank-num">1</div></div><div class="lb-avatar-placeholder">🏋️</div><span class="lb-name">Andrés K.</span><div class="lb-streak"><div class="streak-pill">🔥 38</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-2">
-          <div class="lb-rank"><div class="rank-num">2</div></div>
-          <div class="lb-avatar-placeholder">💪</div>
-          <span class="lb-name">Fernanda L.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 25</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-2"><div class="lb-rank"><div class="rank-num">2</div></div><div class="lb-avatar-placeholder">💪</div><span class="lb-name">Fernanda L.</span><div class="lb-streak"><div class="streak-pill">🔥 25</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-3">
-          <div class="lb-rank"><div class="rank-num">3</div></div>
-          <div class="lb-avatar-placeholder">🧗</div>
-          <span class="lb-name">Roberto S.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 11</div><span class="streak-label">días</span></div>
-        </div>
-        <div class="lb-empty-hint">· · · más usuarios aparecerán aquí · · ·</div>
+        <div class="lb-row rank-3"><div class="lb-rank"><div class="rank-num">3</div></div><div class="lb-avatar-placeholder">🧗</div><span class="lb-name">Roberto S.</span><div class="lb-streak"><div class="streak-pill">🔥 11</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
+        <div class="lb-empty-hint" data-i18n="more_users">· · · más usuarios aparecerán aquí · · ·</div>
       </div>
     </div>
 
@@ -292,39 +259,19 @@
       <div class="lb-card-head">
         <div class="lb-card-icon icon-food">🥗</div>
         <div class="lb-card-info">
-          <div class="lb-card-title">Comer saludable</div>
-          <div class="lb-card-sub">Nutrición constante, día tras día</div>
+          <div class="lb-card-title" data-i18n="lb_food_title">Comer saludable</div>
+          <div class="lb-card-sub" data-i18n="lb_food_sub">Nutrición constante, día tras día</div>
         </div>
-        <div class="lb-count-badge" id="badge-comida">3 activos</div>
+        <div class="lb-count-badge" id="badge-comida">3</div>
       </div>
-      <div class="lb-col-header">
-        <span class="col-rank">#</span>
-        <span class="col-avatar"></span>
-        <span class="col-name">Nombre</span>
-        <span class="col-streak">Racha</span>
-      </div>
+      <div class="lb-col-header"><span class="col-rank">#</span><span class="col-avatar"></span><span class="col-name" data-i18n="col_name">Nombre</span><span class="col-streak" data-i18n="col_streak">Racha</span></div>
       <div class="lb-rows" id="rows-comida">
-        <div class="lb-row rank-1">
-          <div class="lb-rank"><div class="rank-num">1</div></div>
-          <div class="lb-avatar-placeholder">🥦</div>
-          <span class="lb-name">Isabella V.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 52</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-1"><div class="lb-rank"><div class="rank-num">1</div></div><div class="lb-avatar-placeholder">🥦</div><span class="lb-name">Isabella V.</span><div class="lb-streak"><div class="streak-pill">🔥 52</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-2">
-          <div class="lb-rank"><div class="rank-num">2</div></div>
-          <div class="lb-avatar-placeholder">🍎</div>
-          <span class="lb-name">Mateo H.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 41</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-2"><div class="lb-rank"><div class="rank-num">2</div></div><div class="lb-avatar-placeholder">🍎</div><span class="lb-name">Mateo H.</span><div class="lb-streak"><div class="streak-pill">🔥 41</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-3">
-          <div class="lb-rank"><div class="rank-num">3</div></div>
-          <div class="lb-avatar-placeholder">🥑</div>
-          <span class="lb-name">Camila N.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 17</div><span class="streak-label">días</span></div>
-        </div>
-        <div class="lb-empty-hint">· · · más usuarios aparecerán aquí · · ·</div>
+        <div class="lb-row rank-3"><div class="lb-rank"><div class="rank-num">3</div></div><div class="lb-avatar-placeholder">🥑</div><span class="lb-name">Camila N.</span><div class="lb-streak"><div class="streak-pill">🔥 17</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
+        <div class="lb-empty-hint" data-i18n="more_users">· · · más usuarios aparecerán aquí · · ·</div>
       </div>
     </div>
 
@@ -333,100 +280,75 @@
       <div class="lb-card-head">
         <div class="lb-card-icon icon-custom">⭐</div>
         <div class="lb-card-info">
-          <div class="lb-card-title">Racha personalizada</div>
-          <div class="lb-card-sub">Hábitos únicos de cada usuario</div>
+          <div class="lb-card-title" data-i18n="lb_custom_title">Racha personalizada</div>
+          <div class="lb-card-sub" data-i18n="lb_custom_sub">Hábitos únicos de cada usuario</div>
         </div>
-        <div class="lb-count-badge" id="badge-custom">3 activos</div>
+        <div class="lb-count-badge" id="badge-custom">3</div>
       </div>
-      <div class="lb-col-header">
-        <span class="col-rank">#</span>
-        <span class="col-avatar"></span>
-        <span class="col-name">Nombre</span>
-        <span class="col-streak">Racha</span>
-      </div>
+      <div class="lb-col-header"><span class="col-rank">#</span><span class="col-avatar"></span><span class="col-name" data-i18n="col_name">Nombre</span><span class="col-streak" data-i18n="col_streak">Racha</span></div>
       <div class="lb-rows" id="rows-custom">
-        <div class="lb-row rank-1">
-          <div class="lb-rank"><div class="rank-num">1</div></div>
-          <div class="lb-avatar-placeholder">⭐</div>
-          <span class="lb-name">Sebastián O.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 73</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-1"><div class="lb-rank"><div class="rank-num">1</div></div><div class="lb-avatar-placeholder">⭐</div><span class="lb-name">Sebastián O.</span><div class="lb-streak"><div class="streak-pill">🔥 73</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-2">
-          <div class="lb-rank"><div class="rank-num">2</div></div>
-          <div class="lb-avatar-placeholder">🌟</div>
-          <span class="lb-name">Daniela C.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 55</div><span class="streak-label">días</span></div>
-        </div>
+        <div class="lb-row rank-2"><div class="lb-rank"><div class="rank-num">2</div></div><div class="lb-avatar-placeholder">🌟</div><span class="lb-name">Daniela C.</span><div class="lb-streak"><div class="streak-pill">🔥 55</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
         <div class="lb-divider"></div>
-        <div class="lb-row rank-3">
-          <div class="lb-rank"><div class="rank-num">3</div></div>
-          <div class="lb-avatar-placeholder">✨</div>
-          <span class="lb-name">Julián F.</span>
-          <div class="lb-streak"><div class="streak-pill">🔥 33</div><span class="streak-label">días</span></div>
-        </div>
-        <div class="lb-empty-hint">· · · más usuarios aparecerán aquí · · ·</div>
-      </div>
-    </div>
-
-  </div><!-- /leaderboard -->
-
-  <!-- ── PERFIL ── -->
-  <div id="profile" class="screen">
-    <div class="profile-hero">
-      <div class="profile-avatar-wrap" id="profileAvatarWrap" onclick="document.getElementById('photoInput').click()">
-        <span id="profileAvatarEmoji">👤</span>
-        <img id="profileAvatarImg" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div class="profile-name-display" id="profileNameDisplay">Usuario</div>
-      <div class="profile-goal-tag" id="profileGoalTag">Mi meta</div>
-    </div>
-
-    <div class="profile-section">
-      <h4>✏️ Editar perfil</h4>
-      <div class="field-wrap">
-        <label>Nombre</label>
-        <input id="p_name" placeholder="Tu nombre">
-      </div>
-      <div class="field-wrap">
-        <label>Meta principal</label>
-        <select id="p_goal">
-          <option value="salud">💪 Salud y fitness</option>
-          <option value="mente">🧘 Bienestar mental</option>
-          <option value="estudio">📚 Estudio y aprendizaje</option>
-          <option value="productividad">⚡ Productividad</option>
-        </select>
-      </div>
-      <button class="save-btn" onclick="saveProfile()">Guardar cambios</button>
-    </div>
-
-    <div class="profile-section">
-      <h4>🗂️ Editar hábitos</h4>
-      <div id="habitEditList"></div>
-      <div class="add-box" style="margin-top:10px;">
-        <input id="profileHabitInput" placeholder="Nuevo hábito..." maxlength="40">
-        <button onclick="profileAddHabit()">+</button>
+        <div class="lb-row rank-3"><div class="lb-rank"><div class="rank-num">3</div></div><div class="lb-avatar-placeholder">✨</div><span class="lb-name">Julián F.</span><div class="lb-streak"><div class="streak-pill">🔥 33</div><span class="streak-label" data-i18n="days_short">días</span></div></div>
+        <div class="lb-empty-hint" data-i18n="more_users">· · · más usuarios aparecerán aquí · · ·</div>
       </div>
     </div>
   </div>
 
-  <!-- NAV -->
-  <nav class="nav">
-    <button class="nav-btn active" data-sc="home"        onclick="showScreen('home',this)">🏠<span>Inicio</span><div class="nav-pip"></div></button>
-    <button class="nav-btn"        data-sc="stats"       onclick="showScreen('stats',this)">📊<span>Stats</span><div class="nav-pip"></div></button>
-    <button class="nav-btn"        data-sc="motivation"  onclick="showScreen('motivation',this)">✨<span>Foco</span><div class="nav-pip"></div></button>
-    <button class="nav-btn"        data-sc="leaderboard" onclick="showScreen('leaderboard',this)">🏆<span>Ranking</span><div class="nav-pip"></div></button>
-    <button class="nav-btn"        data-sc="profile"     onclick="showScreen('profile',this)">👤<span>Perfil</span><div class="nav-pip"></div></button>
-  </nav>
+  <!-- ── PERFIL ── -->
+  <div id="profile" class="screen">
 
-</div><!-- /app -->
+    <!-- HERO PERFIL -->
+    <div class="profile-hero">
+      <div class="profile-hero-bg"></div>
+      <div class="profile-avatar-area">
+        <div class="profile-avatar-wrap" id="profileAvatarWrap" onclick="document.getElementById('photoInput').click()">
+          <span id="profileAvatarEmoji">👤</span>
+          <img id="profileAvatarImg" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          <div class="avatar-edit-badge">📷</div>
+        </div>
+        <div class="profile-text">
+          <div class="profile-name-display" id="profileNameDisplay">Usuario</div>
+          <div class="profile-level-row">
+            <span class="profile-level-badge" id="profileLevelBadge">⭐ Novato</span>
+            <span class="profile-goal-tag" id="profileGoalTag">Mi meta</span>
+          </div>
+        </div>
+      </div>
 
-<!-- MODALS & UTILS -->
-<div id="rewardModal"><div class="modal-inner" id="modalInner"></div></div>
-<div class="toast" id="toast"></div>
-<input type="file" id="photoInput" accept="image/*" onchange="handlePhoto(event)">
+      <!-- mini stats -->
+      <div class="profile-mini-stats">
+        <div class="mini-stat">
+          <strong id="pm_streak">0</strong>
+          <small data-i18n="streak_label">Racha</small>
+        </div>
+        <div class="mini-stat-divider"></div>
+        <div class="mini-stat">
+          <strong id="pm_record">0</strong>
+          <small data-i18n="record_label">Récord</small>
+        </div>
+        <div class="mini-stat-divider"></div>
+        <div class="mini-stat">
+          <strong id="pm_days">0</strong>
+          <small data-i18n="days_active">Días activos</small>
+        </div>
+      </div>
+    </div>
 
-<script src="app.js"></script>
-</body>
-                                                                                                            </html>
-  
+    <!-- Editar perfil -->
+    <div class="profile-section">
+      <div class="ps-header">
+        <span class="ps-icon">✏️</span>
+        <h4 data-i18n="edit_profile">Editar perfil</h4>
+      </div>
+      <div class="field-wrap">
+        <label data-i18n="label_name">Nombre</label>
+        <input id="p_name" data-i18n-placeholder="placeholder_name" placeholder="Tu nombre">
+      </div>
+      <div class="field-wrap">
+        <label data-i18n="label_goal">Meta principal</label>
+        <select id="p_goal">
+          <option value="salud" data-i18n="goal_health">💪 Salud y fitness</option>
+          <option value="mente" data-i18n="goal_mind">🧘 Bienestar ment
